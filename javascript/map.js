@@ -35,14 +35,14 @@ const lessonPos = (section, idxSection, idxLesson) => {
     return idxLesson + 1;
 }
 
-const flattedSections = sections.flatMap((section, idxSection) => {
-    return [{
+const flattedSections = sections.map((section, idxSection) => {
+    return {
         ...section,
         ...{position: (idxSection+1)},
-        ...{lessons: section.lessons.flatMap((lesson, idxLesson) => {
-                return [{...lesson, ...{position: lessonPos(section, (idxSection+1), idxLesson) } }] }  )
+        ...{lessons: section.lessons.map((lesson, idxLesson) => {
+                return {...lesson, ...{position: lessonPos(section, (idxSection+1), idxLesson) } } }  )
         }
-    }]
+    }
 });
 
 console.log(JSON.stringify(flattedSections, null, 2))
